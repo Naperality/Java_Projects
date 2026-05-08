@@ -1,0 +1,18 @@
+[
+  {
+    "ticket": 2,
+    "license": "145",
+    "brand": "Mitsubishi",
+    "model": "Hatchback",
+    "color": "Black",
+    "fuelType": "Diesel"
+  },
+  {
+    "ticket": 3,
+    "license": "456",
+    "brand": "Toyota",
+    "model": "Fortuner",
+    "color": "Blue",
+    "fuelType": "Gasoline"
+  }
+]

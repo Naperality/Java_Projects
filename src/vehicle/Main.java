@@ -1,16 +1,19 @@
 package vehicle;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         HashMap<Integer, Car> data = new HashMap<>();
         Scanner sc = new Scanner(System.in);
+        // 1. LOAD FIRST
+        loadFromFile(data);
+
         Integer inputTicket = Integer.valueOf(0);
         Integer inTicketMod = Integer.valueOf(0);
-        Integer ticket = Integer.valueOf(1);
         Integer choice = Integer.valueOf(0);
+
         while (choice!=5){
             // User Interface for Management
             System.out.println("-----Welcome to Vehicle Management System-----");
@@ -25,6 +28,12 @@ public class Main {
             // User Choice 
             switch (choice) {
                 case 1:
+                    // we calculate the next ID dynamically from the current keys.
+                    int currentMax = 0;
+                    for (Integer id : data.keySet()) {
+                        if (id > currentMax) currentMax = id;
+                    }
+                    int ticket = currentMax + 1;
                     System.out.println("----------------------------------------------");
                     //Put the details needed for each object or vehicle
                     System.out.println("Vehicle Ticket Number: "+ticket);
@@ -45,7 +54,7 @@ public class Main {
                     // Add the object to hashmap
                     data.put(ticket, newCar);
                     System.out.println("Vehicle Added Successfully!");
-                    ticket++;
+                    saveToFile(data);
                     System.out.println("----------------------------------------------");
                     break;
                 case 2:
@@ -103,6 +112,7 @@ public class Main {
                                 break;
                         }
                     }
+                    saveToFile(data);
                     System.out.println("----------------------------------------------");
                     break;
                 case 4:
@@ -124,9 +134,12 @@ public class Main {
                             System.out.println("Deletion cancelled.");
                         }
                     }
+                    saveToFile(data);
                     System.out.println("----------------------------------------------");
                     break;
                 case 5:
+                    System.out.println("Thank you for using Vehicle Management!");
+                    System.out.println("----------------------------------------------");
                     break;
                 default:
                     System.out.println("Choice is Invalid! Please Try Again!");
@@ -134,5 +147,68 @@ public class Main {
             }
         }
         sc.close();
+    }
+
+    public static void saveToFile(HashMap<Integer, Car> data) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("vehicles.json"))) {
+            writer.write("[\n"); // Start of JSON array
+            int count = 0;
+            for (Car car : data.values()) {
+                String json = String.format(
+                    "  {\n" +
+                    "    \"ticket\": %d,\n" +
+                    "    \"license\": \"%s\",\n" +
+                    "    \"brand\": \"%s\",\n" +
+                    "    \"model\": \"%s\",\n" +
+                    "    \"color\": \"%s\",\n" +
+                    "    \"fuelType\": \"%s\"\n" +
+                    "  }",
+                    car.getTicket(), car.showLicensePlate(), car.showBrand(), 
+                    car.showModel(), car.showColor(), car.showFuelType()
+                );
+                writer.write(json);
+                
+                // Add a comma between objects, but not after the last one
+                if (++count < data.size()) writer.write(",");
+                writer.write("\n");
+            }
+            writer.write("]"); // End of JSON array
+        } catch (IOException e) {
+            System.out.println("Error saving JSON: " + e.getMessage());
+        }
+    }
+
+    public static void loadFromFile(HashMap<Integer, Car> data) {
+        File file = new File("vehicles.json");
+        if (!file.exists()) return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            int ticket = 0;
+            String lp = "", b = "", m = "", c = "", ft = "";
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.startsWith("\"ticket\":")) ticket = Integer.parseInt(line.split(":")[1].replaceAll("[,\\s]", ""));
+                else if (line.startsWith("\"license\":")) lp = extractValue(line);
+                else if (line.startsWith("\"brand\":")) b = extractValue(line);
+                else if (line.startsWith("\"model\":")) m = extractValue(line);
+                else if (line.startsWith("\"color\":")) c = extractValue(line);
+                else if (line.startsWith("\"fuelType\":")) ft = extractValue(line);
+                else if (line.equals("}") || line.equals("},")) {
+                    // When we hit the closing brace, create the car object
+                    data.put(ticket, new Car(ticket, lp, b, m, c, ft));
+                    // Reset variables to prevent data bleeding into the next object
+                    lp = ""; b = ""; m = ""; c = ""; ft = "";
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading JSON: " + e.getMessage());
+        }
+    }
+
+    // Helper method to pull the text out from between the quotes
+    private static String extractValue(String line) {
+        return line.split(":")[1].replaceAll("[\",]", "").trim();
     }
 }
