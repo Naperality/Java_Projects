@@ -1,15 +1,15 @@
 package vehicle;
 
 public abstract class Vehicle {
-    private String brand; // Encapsulation: Private Variable
+    private int ticket; // Encapsulation: Private Variable
     
-    public Vehicle(String brand){
-        this.brand = brand;
+    public Vehicle(int ticket){
+        this.ticket = ticket;
     }
 
     // getter method to access the private brand
-    public String getBrand(){
-        return brand;
+    public Integer getTicket(){
+        return ticket;
     }
     
 }
