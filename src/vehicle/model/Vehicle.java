@@ -1,4 +1,4 @@
-package vehicle;
+package vehicle.model;
 
 public abstract class Vehicle {
     private int ticket; // Encapsulation: Private Variable

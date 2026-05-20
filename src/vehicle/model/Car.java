@@ -1,4 +1,4 @@
-package vehicle;
+package vehicle.model;
 
 // Car: Vehicle, Can Drive
 public class Car extends Vehicle implements Details{
@@ -13,19 +13,19 @@ public class Car extends Vehicle implements Details{
         this.fuelType = fuelType;
     }
 
-    public String showLicensePlate(){
+    public String getLicensePlate(){
         return license;
     };
-    public String showBrand(){
+    public String getBrand(){
         return brand;
     };
-    public String showModel(){
+    public String getModel(){
         return model;
     };
-    public String showColor(){
+    public String getColor(){
         return color;
     };
-    public String showFuelType(){
+    public String getFuelType(){
         return fuelType;
     };
 
