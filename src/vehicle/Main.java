@@ -10,7 +10,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         VehicleService service = new VehicleService();
         Menu menu = new Menu();
-        Integer choice = Integer.valueOf(0);
+        Integer choice = 0;
 
         while (choice!=5){
             menu.showMenu();
@@ -21,7 +21,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     int ticket = service.generateNextTicket();
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     //Put the details needed for each object or vehicle
                     System.out.println("Vehicle Ticket Number: "+ticket);
                     System.out.print("Enter License Plate: ");
@@ -41,10 +41,10 @@ public class Main {
                     // Add the object to hashmap using service
                     service.addVehicle(newCar);
                     System.out.println("Vehicle Added Successfully!");
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     break;
                 case 2:
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     System.out.println("Please Enter Vehicle Ticket: ");
                     int searchTicket = sc.nextInt(); sc.nextLine();
 
@@ -58,11 +58,11 @@ public class Main {
                         System.out.println("Vehicle Color: "+car.getColor());
                         System.out.println("Engine Fuel Type: "+car.getFuelType());
                     }
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     break;
                 case 3:
                     // Use to check the ticket and modify them
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     System.out.println("Please Enter Vehicle Ticket to Modify: ");
                     int inTicketMod = sc.nextInt(); sc.nextLine();
                     if (!service.vehicleExist(inTicketMod)){
@@ -80,10 +80,10 @@ public class Main {
                             System.out.println("Invalid attribute");
                         }
                     }
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     break;
                 case 4:
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     System.out.print("Enter Vehicle Ticket to Delete: ");
                     int deleteTicket = sc.nextInt(); sc.nextLine();
 
@@ -101,12 +101,11 @@ public class Main {
                             System.out.println("Deletion cancelled.");
                         }
                     }
-                    service.saveChanges();
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     break;
                 case 5:
                     System.out.println("Thank you for using Vehicle Management!");
-                    System.out.println("----------------------------------------------");
+                    menu.line();
                     break;
                 default:
                     System.out.println("Choice is Invalid! Please Try Again!");

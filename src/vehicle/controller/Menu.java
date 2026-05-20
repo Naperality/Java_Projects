@@ -11,4 +11,8 @@ public class Menu {
             System.out.println("[5] Exit");
             System.out.println("----------------------------------------------");
     }
+
+    public void line() {
+        System.out.println("----------------------------------------------");
+    }
 }
