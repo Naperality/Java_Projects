@@ -52,11 +52,11 @@ public class Main {
                         System.out.println("No Details - Wrong Key!");
                     }else{
                         Car car = service.getVehicle(searchTicket);
-                        System.out.println("License Plate: "+car.showLicensePlate());
-                        System.out.println("Brand: "+car.showBrand());
-                        System.out.println("Model Type: "+car.showModel());
-                        System.out.println("Vehicle Color: "+car.showColor());
-                        System.out.println("Engine Fuel Type: "+car.showFuelType());
+                        System.out.println("License Plate: "+car.getLicensePlate());
+                        System.out.println("Brand: "+car.getBrand());
+                        System.out.println("Model Type: "+car.getModel());
+                        System.out.println("Vehicle Color: "+car.getColor());
+                        System.out.println("Engine Fuel Type: "+car.getFuelType());
                     }
                     System.out.println("----------------------------------------------");
                     break;

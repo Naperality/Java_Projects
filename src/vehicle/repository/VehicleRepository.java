@@ -22,8 +22,8 @@ public class VehicleRepository{
                     "    \"color\": \"%s\",\n" +
                     "    \"fuelType\": \"%s\"\n" +
                     "  }",
-                    car.getTicket(), car.showLicensePlate(), car.showBrand(), 
-                    car.showModel(), car.showColor(), car.showFuelType()
+                    car.getTicket(), car.getLicensePlate(), car.getBrand(), 
+                    car.getModel(), car.getColor(), car.getFuelType()
                 );
                 writer.write(json);
                 
