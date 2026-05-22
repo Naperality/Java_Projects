@@ -7,6 +7,13 @@ public abstract class Vehicle {
         this.ticket = ticket;
     }
 
+
+
+
+
+
+    
+
     // getter method to access the private brand
     public Integer getTicket(){
         return ticket;
